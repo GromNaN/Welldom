@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Valid XML document
+-->
+<MovieCatalog>
+
+    <movie>
+        <title lang="en">The Matrix</title>
+        <length>136</length>
+        <genre>Sci-Fi and Fantasy</genre>
+        <actors>
+            <actor>Keanu Reeves</actor>
+            <actor>Laurence Fishburne</actor>
+            <actor>Carrie Ann Moss</actor>
+        </actors>
+        <datereleased>1999</datereleased>
+        <director>Wachowski Brothers</director>
+        <format>DVD</format>
+    </movie>
+
+    <movie>
+        <title lang="en">Titanic</title>
+        <length>194</length>
+        <genre>Drama</genre>
+        <actors>
+            <actor>Leonardo DiCaprio</actor>
+            <actor>Kate Winslet</actor>
+        </actors>
+        <datereleased>1999</datereleased>
+        <director>James Cameron</director>
+        <format>DVD</format>
+    </movie>
+
+    <movie>
+        <title lang="en">The Sixth Sense</title>
+        <length>106</length>
+        <genre>Thriller</genre>
+        <actors>
+            <actor>Bruce Willis</actor>
+            <actor>Haley Joel Osment</actor>
+        </actors>
+        <datereleased>1999</datereleased>
+        <director>M. Night Shyamalan</director>
+        <format>VHS</format>
+    </movie>
+
+</MovieCatalog>

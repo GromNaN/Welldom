@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Valid XML document
+-->
+<MovieCatalog>
+
+    <movie>
+        <title>
+    </movie>
+
+    <movie>
+        <genre>Thriller</genres>
+    </movie>
+
+</MovieCatalog>

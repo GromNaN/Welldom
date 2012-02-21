@@ -1,17 +1,21 @@
-ExpDOM extension for PHP DOM
-============================
+Welldom library for PHP DOM
+===========================
 
-*ExpDOM* try to ease the use of DOM to manipulate XML documents.
+*Welldom* try to ease the use of DOM to manipulate XML documents with the following features :
+
+* Error management
+* Unique encoding for XML input/output
+* Simple methods to query and manipulate the DOM with Xpath
+* Batch on node list
+* Node rename & remove methods
 
 Requirements
 ------------
 * PHP 5.3+
 * PHPUnit 5.6+
 
-
 Installation
 ------------
-
 The library follow the PSR-0 naming convention. To load the library,
 use any compliant class loader or simply require the `src/autoload.php` file.
 
@@ -19,10 +23,8 @@ use any compliant class loader or simply require the `src/autoload.php` file.
 require __DIR__ . '/path/to/expdom/src/autoload.php';
 ```
 
-
 Usage
 -----
-
 Load an XML document:
 
 ``` php
@@ -59,19 +61,18 @@ $doc->query('//foo/bar[@lang=english]/@lang')
     ->setValue('en');
 ```
 
-
 Run tests
 ---------
-
 Run PHPUnit test suite:
-```
-phpunit
-```
 
-Quality metrics:
-```
-ant phpmd
-ant phpcs
-ant phpcpd
-ant phploc
-```
+    phpunit
+
+
+License
+-------
+For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+
+Contributors:
+
+* [Jérôme Macias](/jeromemacias)
+* [Jérôme Tamarelle](/GromNaN)

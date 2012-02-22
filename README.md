@@ -1,5 +1,5 @@
-Welldom library for PHP DOM
-===========================
+Welldom, the XML toolbox for PHP
+================================
 
 *Welldom* try to ease the use of DOM to manipulate XML documents with the following features :
 

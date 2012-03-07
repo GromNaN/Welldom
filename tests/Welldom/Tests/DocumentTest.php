@@ -11,11 +11,11 @@
 
 namespace Welldom\Tests;
 
+use Welldom\Document;
+
 /**
  * @covers \Welldom\Document
  */
-use Welldom\Document;
-
 class DocumentTest extends TestCase
 {
     public function testConstructorEncoding()
@@ -58,11 +58,16 @@ class DocumentTest extends TestCase
         $this->assertFalse($success, '->load() returns false');
     }
 
+    public function testLoadUnsetXpath()
+    {
+        $doc = new Document();
+        $doc->getXpath();
+        $doc->load(FILES_DIR . '/valid.xml');
+        $this->assertEquals(3, $doc->getXpath()->query('//movie')->getLength(), 'The Xpath is built on last loaded XML');
+    }
+
 // ->loadXML()
 
-    /**
-     * @covers \Welldom\Document::loadXML
-     */
     public function testLoadXML()
     {
         $doc = new Document();
@@ -70,9 +75,6 @@ class DocumentTest extends TestCase
         $this->assertTrue($success, '->loadXML() returns true');
     }
 
-    /**
-     * @covers \Welldom\Document::loadXML
-     */
     public function testLoadXMLError()
     {
         $doc = new Document();
@@ -87,6 +89,13 @@ class DocumentTest extends TestCase
         $this->assertCount(3, $doc->getLastErrors());
     }
 
+    public function testLoadXMLUnsetXpath()
+    {
+        $doc = new Document();
+        $doc->getXpath();
+        $doc->loadXML('<foo><bar/></foo>');
+        $this->assertEquals(1, $doc->getXpath()->query('//bar')->getLength(), 'The Xpath is built on last loaded XML');
+    }
 
 // ->getXmlWithoutDoctype()
 

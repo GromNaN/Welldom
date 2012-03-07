@@ -135,6 +135,8 @@ class Document extends \DOMDocument
      */
     public function load($filename, $options = LIBXML_COMPACT)
     {
+        $this->xpath = null;
+
         XmlErrorHandler::start();
         $success = parent::load($filename, $options);
         $this->lastErrors = XmlErrorHandler::getErrors();
@@ -151,6 +153,7 @@ class Document extends \DOMDocument
     public function loadXML($source, $options = LIBXML_COMPACT)
     {
         $source = $this->fixDoctype($source);
+        $this->xpath = null;
 
         XmlErrorHandler::start();
         $success = parent::loadXML($source, $options);

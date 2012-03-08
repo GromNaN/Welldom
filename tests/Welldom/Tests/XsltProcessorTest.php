@@ -53,8 +53,8 @@ class XsltProcessorTest extends TestCase
         $xml = $xslt->transformToXml($doc, array('owner' => 'Me', 'foo' => 'quz'));
 
         $this->assertEquals('<movies><owner>Me</owner><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>', $xml, '->transformToXml() returns the generated XML');
-        $this->assertFalse($xslt->getParameter('', 'param'), '->transformToXml() reset parameters');
-        $this->assertEquals('bar', $xslt->getParameter('', 'foo'), '->transformToXml() reset parameters');
+        $this->assertFalse($xslt->getParameter('param'), '->transformToXml() reset parameters');
+        $this->assertEquals('bar', $xslt->getParameter('foo'), '->transformToXml() reset parameters');
         $this->assertCount(0, $xslt->getLastErrors(), '->transformToXml() generates no error');
     }
 
@@ -67,7 +67,7 @@ class XsltProcessorTest extends TestCase
         $xml = $xslt->transformToXml($doc, array('param' => 'val'));
 
         $this->assertEquals('<movies><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>', $xml, '->transformToXml() returns XML in case of warning');
-        $this->assertFalse($xslt->getParameter('', 'param'), '->transformToXml() reset parameters');
+        $this->assertFalse($xslt->getParameter('param'), '->transformToXml() reset parameters');
         $this->assertCount(3, $xslt->getLastErrors(), '->transformToXml() generate last errors');
     }
 
@@ -84,8 +84,8 @@ class XsltProcessorTest extends TestCase
         $this->assertInstanceOf('\Welldom\Document', $genDoc, '->transformToDoc() returns an Welldom\Document');
         $this->assertInstanceOf('\Welldom\Element', $genDoc->childNodes->item(0));
         $this->assertEquals('<movies><owner>Me</owner><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>', $genDoc->getXml(), '->transformToDoc() returns the generated XML');
-        $this->assertFalse($xslt->getParameter('', 'param'), '->transformToDoc() reset parameters');
-        $this->assertEquals('bar', $xslt->getParameter('', 'foo'), '->transformToDoc() reset parameters');
+        $this->assertFalse($xslt->getParameter('param'), '->transformToDoc() reset parameters');
+        $this->assertEquals('bar', $xslt->getParameter('foo'), '->transformToDoc() reset parameters');
         $this->assertCount(0, $xslt->getLastErrors(), '->transformToDoc() generates no error');
     }
 
@@ -98,7 +98,7 @@ class XsltProcessorTest extends TestCase
         $xml = $xslt->transformToDoc($doc, array('param' => 'val'));
 
         $this->assertInstanceOf('\Welldom\Document', $doc, '->transformToDoc() returns Document in case of warning');
-        $this->assertFalse($xslt->getParameter('', 'param'), '->transformToDoc() reset parameters');
+        $this->assertFalse($xslt->getParameter('param'), '->transformToDoc() reset parameters');
         $this->assertCount(3, $xslt->getLastErrors(), '->transformToDoc() generate last errors');
     }
 
@@ -117,8 +117,8 @@ class XsltProcessorTest extends TestCase
 
         $this->assertTrue(is_file($filename), '->transformToUri() creates a file');
         $this->assertEquals('<movies><owner>Me</owner><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>'."\n", file_get_contents($filename), '->transformToUri() returns the generated XML');
-        $this->assertFalse($xslt->getParameter('', 'param'), '->transformToUri() reset parameters');
-        $this->assertEquals('bar', $xslt->getParameter('', 'foo'), '->transformToUri() reset parameters');
+        $this->assertFalse($xslt->getParameter('param'), '->transformToUri() reset parameters');
+        $this->assertEquals('bar', $xslt->getParameter('foo'), '->transformToUri() reset parameters');
         $this->assertCount(0, $xslt->getLastErrors(), '->transformToUri() generates no error');
         unlink($filename);
     }
@@ -133,8 +133,8 @@ class XsltProcessorTest extends TestCase
             'bar' => 'barval',
         ));
 
-        $this->assertSame('fooval', $xslt->getParameter('', 'foo'));
-        $this->assertSame('barval', $xslt->getParameter('', 'bar'));
+        $this->assertSame('fooval', $xslt->getParameter('foo'));
+        $this->assertSame('barval', $xslt->getParameter('bar'));
     }
 
 // ->removeParameters()
@@ -142,11 +142,11 @@ class XsltProcessorTest extends TestCase
     public function testRemoveParameters()
     {
         $xslt = new XsltProcessor(FILES_DIR . '/valid.xsl');
-        $xslt->setParameter('', 'foo', 'fooval');
-        $xslt->setParameter('', 'bar', 'barval');
+        $xslt->setParameter('foo', 'fooval');
+        $xslt->setParameter('bar', 'barval');
         $xslt->removeParameters(array('foo', 'bar'));
 
-        $this->assertFalse($xslt->getParameter('', 'foo'));
-        $this->assertFalse($xslt->getParameter('', 'bar'));
+        $this->assertFalse($xslt->getParameter('foo'));
+        $this->assertFalse($xslt->getParameter('bar'));
     }
 }

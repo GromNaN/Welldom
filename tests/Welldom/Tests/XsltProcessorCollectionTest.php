@@ -18,12 +18,11 @@ use Welldom\XsltProcessorCollection;
  */
 class XsltProcessorCollectionTest extends TestCase
 {
-
     public function testGetXsltProcessor()
     {
         $filename = FILES_DIR . '/frameworks.xsl';
         $xslt = XsltProcessorCollection::getXsltProcessor($filename);
-        $this->assertInstanceOf('\XSLTProcessor', $xslt);
+        $this->assertInstanceOf('\Welldom\XsltProcessor', $xslt);
         $this->assertSame($xslt, XsltProcessorCollection::getXsltProcessor($filename), '::getXsltProcessor() keep in memory');
         XsltProcessorCollection::free();
     }

@@ -16,17 +16,22 @@ namespace Welldom;
  *
  * @author Jérôme Tamarelle <jerome@tamarelle.net>
  */
-class XsltProcessor extends \XSLTProcessor
+class XsltProcessor
 {
     /**
-     * @var array
+     * @var \XSLTProcessor
      */
-    protected $lastErrors = array();
+    protected $processor;
 
     /**
      * @var array
      */
-    protected $replacedParameters;
+    private $lastErrors = array();
+
+    /**
+     * @var array
+     */
+    private $replacedParameters;
 
     /**
      * Constructor.
@@ -38,10 +43,11 @@ class XsltProcessor extends \XSLTProcessor
     {
         XmlErrorHandler::start();
 
+        $this->processor = new \XSLTProcessor();
         $xslDoc = new \DOMDocument();
         $xslDoc->load($filename, LIBXML_NOCDATA | LIBXML_COMPACT);
-        $this->registerPHPFunctions();
-        $this->importStyleSheet($xslDoc);
+        $this->processor->registerPHPFunctions();
+        $this->processor->importStyleSheet($xslDoc);
 
         $this->lastErrors = XmlErrorHandler::getErrors();
         XmlErrorHandler::clean();
@@ -57,7 +63,7 @@ class XsltProcessor extends \XSLTProcessor
     public function transformToXml(\DOMNode $node, array $parameters = array())
     {
         $this->preTransform($parameters);
-        $xml = parent::transformToXml($node);
+        $xml = $this->processor->transformToXml($node);
         $this->postTransform($parameters);
 
         if (false === $xml) {
@@ -77,7 +83,7 @@ class XsltProcessor extends \XSLTProcessor
     public function transformToDoc(\DOMNode $node, array $parameters = array())
     {
         $this->preTransform($parameters);
-        $doc = parent::transformToDoc($node);
+        $doc = $this->processor->transformToDoc($node);
         $this->postTransform();
 
         if (false === $doc) {
@@ -100,10 +106,35 @@ class XsltProcessor extends \XSLTProcessor
     public function transformToUri(\DOMNode $node, $filename, array $parameters = array())
     {
         $this->preTransform($parameters);
-        $ret = parent::transformToUri($node, $filename);
+        $ret = $this->processor->transformToUri($node, $filename);
         $this->postTransform($parameters);
 
         return $ret;
+    }
+
+    /**
+     * Get a parameter value
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function getParameter($name)
+    {
+        return $this->processor->getParameter('', $name);
+    }
+
+    /**
+     * Set a parameter value
+     *
+     * @param string $name
+     * @param string $value
+     * @return \Welldom\XsltProcessor
+     */
+    public function setParameter($name, $value)
+    {
+        return $this->processor->setParameter('', $name, $value);
+
+        return $this;
     }
 
     /**
@@ -114,7 +145,20 @@ class XsltProcessor extends \XSLTProcessor
      */
     public function setParameters(array $parameters)
     {
-        $this->setParameter('', $parameters);
+        $this->processor->setParameter('', $parameters);
+
+        return $this;
+    }
+
+    /**
+     * Remove a parameter
+     *
+     * @param string $name
+     * @return \Welldom\XsltProcessor
+     */
+    public function removeParameter(array $name)
+    {
+        $this->processor->removeParameter('', $name);
 
         return $this;
     }
@@ -122,13 +166,13 @@ class XsltProcessor extends \XSLTProcessor
     /**
      * Removes a list of parameters.
      *
-     * @param type $parameterNames List of names
+     * @param type $names List of names
      * @return \Welldom\XsltProcessor
      */
-    public function removeParameters(array $parameterNames)
+    public function removeParameters(array $names)
     {
-        foreach ($parameterNames as $name) {
-            $this->removeParameter('', $name);
+        foreach ($names as $name) {
+            $this->processor->removeParameter('', $name);
         }
 
         return $this;
@@ -155,8 +199,8 @@ class XsltProcessor extends \XSLTProcessor
         if (0 !== count($parameters)) {
             $this->replacedParameters = array();
             foreach ($parameters as $name => $value) {
-                $this->replacedParameters[$name] = $this->getParameter('', $name);
-                $this->setParameter('', $name, $value);
+                $this->replacedParameters[$name] = $this->processor->getParameter('', $name);
+                $this->processor->setParameter('', $name, $value);
             }
         }
 
@@ -176,9 +220,9 @@ class XsltProcessor extends \XSLTProcessor
         {
             foreach ($this->replacedParameters as $name => $value) {
                 if (false === $value) {
-                    $this->removeParameter('', $name);
+                    $this->processor->removeParameter('', $name);
                 } else {
-                    $this->setParameter('', $name, $value);
+                    $this->processor->setParameter('', $name, $value);
                 }
             }
         }

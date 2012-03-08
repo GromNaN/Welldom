@@ -53,7 +53,7 @@ class XsltProcessorCollection
     /**
      * Unset all XsltProcessors.
      */
-    public function free()
+    static public function free()
     {
         self::$xsltProcessors = array();
     }

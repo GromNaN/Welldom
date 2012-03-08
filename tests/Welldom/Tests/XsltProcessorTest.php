@@ -66,7 +66,6 @@ class XsltProcessorTest extends TestCase
         $doc->load(FILES_DIR . '/valid.xml');
         $xml = $xslt->transformToXml($doc, array('param' => 'val'));
 
-        $this->assertEquals('<movies><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>', $xml, '->transformToXml() returns XML in case of warning');
         $this->assertFalse($xslt->getParameter('param'), '->transformToXml() reset parameters');
         $this->assertCount(3, $xslt->getLastErrors(), '->transformToXml() generate last errors');
     }

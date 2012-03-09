@@ -1,0 +1,27 @@
+{
+    "name": "welldom/welldom",
+    "type": "library",
+    "description": "XML toolbox for PHP",
+    "keywords": ["DOM", "XML", "Xpath", "XSLT"],
+    "homepage": "https://github.com/LExpress/Welldom",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jéme Tamarelle",
+            "email": "jerome@tamarelle.net"
+        },
+        {
+            "name": "Jéme Macias",
+            "email": "jerome.macias@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "suggest": {
+        "symfony/css-selector": "*"
+    },
+    "autoload": {
+        "psr-0": { "Welldom": "src/" }
+    }
+}

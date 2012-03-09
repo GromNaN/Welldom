@@ -1,4 +1,4 @@
-Welldom, the XML toolbox for PHP
+Welldom, the XML toolbox for PHP         [![Build Status](https://secure.travis-ci.org/LExpress/Welldom.png)](http://travis-ci.org/LExpress/Welldom)
 ================================
 
 *Welldom* try to ease the use of DOM to manipulate XML documents with the following features :

@@ -19,7 +19,7 @@
         "php": ">=5.3.0"
     },
     "suggest": {
-        "symfony/css-selector": "*"
+        "symfony/css-selector": "Provides facilities is you prefers CSS to Xpath"
     },
     "autoload": {
         "psr-0": { "Welldom": "src/" }

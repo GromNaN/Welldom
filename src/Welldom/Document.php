@@ -20,7 +20,7 @@ use Welldom\Exception\InvalidXpathException;
  */
 class Document extends \DOMDocument
 {
-    const DEFAULT_ENCODING = 'ISO-8859-15';
+    const DEFAULT_ENCODING = 'UTF-8';
     const DEFAULT_VERSION = '1.0';
 
     /**

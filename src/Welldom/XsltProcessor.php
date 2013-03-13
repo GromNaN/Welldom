@@ -132,7 +132,7 @@ class XsltProcessor
      */
     public function setParameter($name, $value)
     {
-        return $this->processor->setParameter('', $name, $value);
+        $this->processor->setParameter('', $name, $value);
 
         return $this;
     }

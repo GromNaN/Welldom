@@ -447,7 +447,7 @@ class Document extends \DOMDocument
      */
     public function setNodeValue($expression, $value = null)
     {
-        if (false === $node = $this->getXpath($expression)->queryOne()) {
+        if (false === $node = $this->getXpath()->queryOne($expression)) {
             return false;
         }
 

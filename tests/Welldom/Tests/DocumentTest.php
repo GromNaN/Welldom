@@ -169,6 +169,57 @@ class DocumentTest extends TestCase
         $this->assertInstanceOf('\Welldom\NodeList', $nodes, '->getElementsByTagName() returns an instance of \Welldom\NodeList');
     }
 
+// ->createElement()
+
+    /**
+     * @dataProvider dataForTestCreateElement
+     */
+    public function testCreateElement($name, $value, $namespaceUri, $expected, $expectedClass, $message)
+    {
+        $doc = Document::create('<test></test>');
+        $element = $doc->createElement($name, $value, $namespaceUri);
+        $this->assertEquals($expected, $element->getXml(), $message);
+        $this->assertInstanceOf($expectedClass, $element, '->createElement() returns the created element');
+    }
+
+    public function dataForTestCreateElement()
+    {
+        return array(
+            1 => array(
+                'foo',
+                null,
+                null,
+                '<foo/>',
+                '\Welldom\Element',
+                '->createNode() created the element with the right name'
+            ),
+            2 => array(
+                'bar',
+                'content',
+                null,
+                '<bar>content</bar>',
+                '\Welldom\Element',
+                '->createNode() created the element with the right name and the right value'
+            ),
+            3 => array(
+                'foo',
+                null,
+                'test',
+                '<foo xmlns="test"/>',
+                '\Welldom\Element',
+                '->createNode() created the element with the right name'
+            ),
+            4 => array(
+                'bar',
+                'content',
+                'test',
+                '<bar xmlns="test">content</bar>',
+                '\Welldom\Element',
+                '->createNode() created the element with the right name and the right value'
+            ),
+        );
+    }
+
 // ->createNode()
 
     /**

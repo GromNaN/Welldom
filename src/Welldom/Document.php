@@ -320,6 +320,22 @@ class Document extends \DOMDocument
     }
 
     /**
+     * A fix to avoid "unterminated entity reference" error with unescaping string
+     * {@inheritDoc}
+     *
+     * @return \Welldom\Element
+     */
+    public function createElement($name, $value = null, $namespaceUri = null) {
+        $element = new Element($name, null, $namespaceUri);
+        $element = $this->importNode($element);
+        if (!empty($value)) {
+            $element->appendChild(new Text($value));
+        }
+
+        return $element;
+    }
+
+    /**
      * Create node
      *
      * @param string $expression Xpath expression

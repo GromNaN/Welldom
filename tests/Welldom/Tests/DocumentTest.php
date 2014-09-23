@@ -217,6 +217,14 @@ class DocumentTest extends TestCase
                 '\Welldom\Element',
                 '->createNode() created the element with the right name and the right value'
             ),
+            5 => array(
+                'bar',
+                '0',
+                null,
+                '<bar>0</bar>',
+                '\Welldom\Element',
+                '->createNode() created the element with the right name and the right value'
+            ),
         );
     }
 

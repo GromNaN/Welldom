@@ -328,7 +328,7 @@ class Document extends \DOMDocument
     public function createElement($name, $value = null, $namespaceUri = null) {
         $element = new Element($name, null, $namespaceUri);
         $element = $this->importNode($element);
-        if (!empty($value)) {
+        if (null !== $value) {
             $element->appendChild(new Text($value));
         }
 

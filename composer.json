@@ -24,7 +24,15 @@
     "autoload": {
         "psr-0": { "Welldom": "src/" }
     },
+    "autoload-dev": {
+        "psr-0": { "Welldom\\Tests": "tests/" }
+    },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
     }
 }

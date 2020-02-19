@@ -50,14 +50,14 @@ class DocumentTest extends TestCase
     public function testLoad()
     {
         $doc = new Document();
-        $success = $doc->load(FILES_DIR . '/valid.xml');
+        $success = $doc->load(self::fixtureFile('/valid.xml'));
         $this->assertTrue($success, '->load() returns true');
     }
 
     public function testLoadError()
     {
         $doc = new Document();
-        $success = $doc->load(FILES_DIR . '/invalid.xml');
+        $success = $doc->load(self::fixtureFile('/invalid.xml'));
         $this->assertFalse($success, '->load() returns false');
     }
 
@@ -65,7 +65,7 @@ class DocumentTest extends TestCase
     {
         $doc = new Document();
         $doc->getXpath();
-        $doc->load(FILES_DIR . '/valid.xml');
+        $doc->load(self::fixtureFile('/valid.xml'));
         $this->assertEquals(3, $doc->getXpath()->query('//movie')->getLength(), 'The Xpath is built on last loaded XML');
     }
 

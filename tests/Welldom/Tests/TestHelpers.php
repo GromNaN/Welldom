@@ -19,7 +19,7 @@ trait TestHelpers
      * @param string $source XML source
      * @return \Welldom\Document
      */
-    protected function createDocument($source)
+    private function createDocument($source)
     {
         $doc = new Document();
 
@@ -28,5 +28,10 @@ trait TestHelpers
         }
 
         return $doc;
+    }
+
+    private static function fixtureFile(string $filename) :string
+    {
+        return dirname(__DIR__, 2).'/_files'.$filename;
     }
 }

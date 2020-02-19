@@ -23,7 +23,7 @@ class XsltProcessorCollectionTest extends TestCase
 
     public function testGetXsltProcessor()
     {
-        $filename = FILES_DIR . '/frameworks.xsl';
+        $filename = self::fixtureFile('/frameworks.xsl');
         $xslt = XsltProcessorCollection::getXsltProcessor($filename);
         $this->assertInstanceOf('\Welldom\XsltProcessor', $xslt);
         $this->assertSame($xslt, XsltProcessorCollection::getXsltProcessor($filename), '::getXsltProcessor() keep in memory');
@@ -33,12 +33,12 @@ class XsltProcessorCollectionTest extends TestCase
     public function testGetXsltProcessorLoadException()
     {
         $this->expectException(\DOMException::class);
-        XsltProcessorCollection::getXsltProcessor(FILES_DIR . '/frameworks-invalid.xsl');
+        XsltProcessorCollection::getXsltProcessor(self::fixtureFile('/frameworks-invalid.xsl'));
     }
 
     public function testGetXsltProcessorFileException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        XsltProcessorCollection::getXsltProcessor(FILES_DIR . '/does-not-exists.xsl');
+        XsltProcessorCollection::getXsltProcessor(self::fixtureFile('/does-not-exists.xsl'));
     }
 }

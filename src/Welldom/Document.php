@@ -186,7 +186,7 @@ class Document extends \DOMDocument
      *      $doc->encoding = 'iso-8859-15';
      *      $doc->saveXML($node);
      */
-    public function saveXML(\DOMNode $node = null, int $options = null)
+    public function saveXML(\DOMNode $node = null, $options = null)
     {
         if (null === $node) {
             return parent::saveXML(null, $options);

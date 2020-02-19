@@ -345,7 +345,7 @@ class Document extends \DOMDocument
      */
     public function createNode($expression, $value = null, array $attributes = null)
     {
-        $current = ('/' === $expression{0}) ? $this : $this->documentElement;
+        $current = ('/' === $expression[0]) ? $this : $this->documentElement;
         $xpaths = explode('/', str_replace('//', '', $expression));
 
         $i = 0;

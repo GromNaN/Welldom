@@ -284,7 +284,7 @@ class Element extends \DOMElement
                 $mValue = $childNode->getValue();
             }
 
-            $sKey = $childNode->nodeName{0} == '#' ? 0 : $childNode->nodeName;
+            $sKey = $childNode->nodeName[0] == '#' ? 0 : $childNode->nodeName;
 
             // this will give us a clue as to what the result structure should be
             // how many of these child nodes do we have?

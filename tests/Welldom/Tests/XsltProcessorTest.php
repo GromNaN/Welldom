@@ -11,6 +11,7 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Welldom\XsltProcessor;
 use Welldom\Document;
 
@@ -19,6 +20,7 @@ use Welldom\Document;
  */
 class XsltProcessorTest extends TestCase
 {
+    use TestHelpers;
 
 // ->__construct()
 
@@ -29,7 +31,7 @@ class XsltProcessorTest extends TestCase
     {
         $xslt = new XsltProcessor(FILES_DIR . $filename);
 
-        $this->assertInternalType('array', $xslt->getLastErrors());
+        $this->assertIsArray($xslt->getLastErrors());
         $this->assertCount($errorsCount, $xslt->getLastErrors());
     }
 

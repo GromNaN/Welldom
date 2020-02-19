@@ -11,8 +11,11 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 class NodeListTest extends TestCase
 {
+    use TestHelpers;
 
 // ->getIterator()
 

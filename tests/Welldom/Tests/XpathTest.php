@@ -11,6 +11,8 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
+use Welldom\Exception\InvalidXpathException;
 use Welldom\Xpath;
 
 /**
@@ -18,6 +20,7 @@ use Welldom\Xpath;
  */
 class XpathTest extends TestCase
 {
+    use TestHelpers;
 
     /**
      * @covers Welldom\Xpath::queryOne
@@ -32,10 +35,10 @@ class XpathTest extends TestCase
 
     /**
      * @covers Welldom\Xpath::queryOne
-     * @expectedException \Welldom\Exception\InvalidXpathException
      */
     public function testQueryOneException()
     {
+        $this->expectException(InvalidXpathException::class);
         $this->getXpath('<foo/>')->queryOne('foo[');
     }
 
@@ -52,10 +55,10 @@ class XpathTest extends TestCase
 
     /**
      * @covers Welldom\Xpath::query
-     * @expectedException \Welldom\Exception\InvalidXpathException
      */
     public function testQueryException()
     {
+        $this->expectException(InvalidXpathException::class);
         $this->getXpath('<foo/>')->query('foo[');
     }
 
@@ -71,10 +74,10 @@ class XpathTest extends TestCase
 
     /**
      * @covers Welldom\Xpath::evaluate
-     * @expectedException \Welldom\Exception\InvalidXpathException
      */
     public function testEvaluateException()
     {
+        $this->expectException(InvalidXpathException::class);
         $this->getXpath('<foo/>')->evaluate('foo[');
     }
 

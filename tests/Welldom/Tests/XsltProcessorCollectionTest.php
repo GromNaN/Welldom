@@ -11,6 +11,7 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Welldom\XsltProcessorCollection;
 
 /**
@@ -18,6 +19,8 @@ use Welldom\XsltProcessorCollection;
  */
 class XsltProcessorCollectionTest extends TestCase
 {
+    use TestHelpers;
+
     public function testGetXsltProcessor()
     {
         $filename = FILES_DIR . '/frameworks.xsl';
@@ -27,19 +30,15 @@ class XsltProcessorCollectionTest extends TestCase
         XsltProcessorCollection::free();
     }
 
-    /**
-     * @expectedException \DOMException
-     */
     public function testGetXsltProcessorLoadException()
     {
+        $this->expectException(\DOMException::class);
         XsltProcessorCollection::getXsltProcessor(FILES_DIR . '/frameworks-invalid.xsl');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetXsltProcessorFileException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         XsltProcessorCollection::getXsltProcessor(FILES_DIR . '/does-not-exists.xsl');
     }
 }

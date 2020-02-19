@@ -13,7 +13,7 @@ namespace Welldom\Tests;
 
 use Welldom\Document;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+trait TestHelpers
 {
     /**
      * @param string $source XML source

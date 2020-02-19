@@ -11,11 +11,15 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers \Welldom\Element
  */
 class ElementTests extends TestCase
 {
+    use TestHelpers;
+
 // ->getDocument()
 
     public function testGetDocument()

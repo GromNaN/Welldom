@@ -11,6 +11,7 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Welldom\Document;
 
 /**
@@ -18,6 +19,8 @@ use Welldom\Document;
  */
 class DocumentTest extends TestCase
 {
+    use TestHelpers;
+
     public function testConstructorEncoding()
     {
         $doc = Document::create('<foo />', 'UTF-8');
@@ -81,11 +84,11 @@ class DocumentTest extends TestCase
         $this->assertEquals(array(), $doc->getLastErrors());
 
         $this->assertFalse($doc->loadXML(''), '->loadXML() returns false with empty string');
-        $this->assertInternalType('array', $doc->getLastErrors());
+        $this->assertIsArray($doc->getLastErrors());
         $this->assertCount(1, $doc->getLastErrors());
 
         $this->assertFalse($doc->loadXML('<foo><bar></foo a="1>'), '->loadXML() returns false with invalid XML');
-        $this->assertInternalType('array', $doc->getLastErrors());
+        $this->assertIsArray($doc->getLastErrors());
         $this->assertCount(3, $doc->getLastErrors());
     }
 

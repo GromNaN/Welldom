@@ -11,6 +11,7 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Welldom\XmlSerializer;
 
 /**
@@ -18,6 +19,8 @@ use Welldom\XmlSerializer;
  */
 class XmlSerializerTest extends TestCase
 {
+    use TestHelpers;
+
     /**
      * @dataProvider dataForTestXmlToArrayToXml
      */

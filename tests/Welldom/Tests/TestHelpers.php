@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,13 +13,13 @@ namespace Welldom\Tests;
 
 use Welldom\Document;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+trait TestHelpers
 {
     /**
      * @param string $source XML source
      * @return \Welldom\Document
      */
-    protected function createDocument($source)
+    private function createDocument($source)
     {
         $doc = new Document();
 
@@ -28,5 +28,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
         }
 
         return $doc;
+    }
+
+    private static function fixtureFile(string $filename) :string
+    {
+        return dirname(__DIR__, 2).'/_files'.$filename;
     }
 }

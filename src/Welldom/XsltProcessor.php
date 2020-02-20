@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -64,7 +64,7 @@ class XsltProcessor
     {
         $this->preTransform($parameters);
         $xml = $this->processor->transformToXml($node);
-        $this->postTransform($parameters);
+        $this->postTransform();
 
         if (false === $xml) {
             return false;
@@ -166,7 +166,7 @@ class XsltProcessor
     /**
      * Removes a list of parameters.
      *
-     * @param type $names List of names
+     * @param string[] $names List of names
      * @return \Welldom\XsltProcessor
      */
     public function removeParameters(array $names)

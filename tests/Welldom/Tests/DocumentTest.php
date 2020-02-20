@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +11,7 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Welldom\Document;
 
 /**
@@ -18,6 +19,8 @@ use Welldom\Document;
  */
 class DocumentTest extends TestCase
 {
+    use TestHelpers;
+
     public function testConstructorEncoding()
     {
         $doc = Document::create('<foo />', 'UTF-8');
@@ -47,14 +50,14 @@ class DocumentTest extends TestCase
     public function testLoad()
     {
         $doc = new Document();
-        $success = $doc->load(FILES_DIR . '/valid.xml');
+        $success = $doc->load(self::fixtureFile('/valid.xml'));
         $this->assertTrue($success, '->load() returns true');
     }
 
     public function testLoadError()
     {
         $doc = new Document();
-        $success = $doc->load(FILES_DIR . '/invalid.xml');
+        $success = $doc->load(self::fixtureFile('/invalid.xml'));
         $this->assertFalse($success, '->load() returns false');
     }
 
@@ -62,7 +65,7 @@ class DocumentTest extends TestCase
     {
         $doc = new Document();
         $doc->getXpath();
-        $doc->load(FILES_DIR . '/valid.xml');
+        $doc->load(self::fixtureFile('/valid.xml'));
         $this->assertEquals(3, $doc->getXpath()->query('//movie')->getLength(), 'The Xpath is built on last loaded XML');
     }
 
@@ -81,11 +84,11 @@ class DocumentTest extends TestCase
         $this->assertEquals(array(), $doc->getLastErrors());
 
         $this->assertFalse($doc->loadXML(''), '->loadXML() returns false with empty string');
-        $this->assertInternalType('array', $doc->getLastErrors());
+        $this->assertIsArray($doc->getLastErrors());
         $this->assertCount(1, $doc->getLastErrors());
 
         $this->assertFalse($doc->loadXML('<foo><bar></foo a="1>'), '->loadXML() returns false with invalid XML');
-        $this->assertInternalType('array', $doc->getLastErrors());
+        $this->assertIsArray($doc->getLastErrors());
         $this->assertCount(3, $doc->getLastErrors());
     }
 

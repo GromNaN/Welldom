@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,11 +11,15 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers \Welldom\Element
  */
 class ElementTests extends TestCase
 {
+    use TestHelpers;
+
 // ->getDocument()
 
     public function testGetDocument()

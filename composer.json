@@ -16,12 +16,26 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=7.2.0",
+        "ext-dom": "*",
+        "ext-xsl": "*",
+        "ext-libxml": "*"
     },
     "suggest": {
         "symfony/css-selector": "Provides facilities is you prefers CSS to Xpath"
     },
     "autoload": {
         "psr-0": { "Welldom": "src/" }
+    },
+    "autoload-dev": {
+        "psr-0": { "Welldom\\Tests": "tests/" }
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
     }
 }

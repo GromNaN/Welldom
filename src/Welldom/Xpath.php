@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -74,7 +74,7 @@ class Xpath extends \DOMXPath
      * @param string $expression Xpath expression
      * @param \DOMNode $contextnode
      * @param bool $registerNodeNS
-     * @return \Welldom\Node The node found or FALSE if the number of results is not 1
+     * @return \Welldom\NodeInterface|false The node found or FALSE if the number of results is not 1
      * @throws \Welldom\Exception\InvalidXpathException
      */
     public function queryOne($expression, \DOMNode $contextnode = null, $registerNodeNS = true)

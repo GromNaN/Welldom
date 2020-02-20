@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +11,7 @@
 
 namespace Welldom\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Welldom\XsltProcessor;
 use Welldom\Document;
 
@@ -19,6 +20,7 @@ use Welldom\Document;
  */
 class XsltProcessorTest extends TestCase
 {
+    use TestHelpers;
 
 // ->__construct()
 
@@ -27,9 +29,9 @@ class XsltProcessorTest extends TestCase
      */
     public function testConstructor($filename, $errorsCount)
     {
-        $xslt = new XsltProcessor(FILES_DIR . $filename);
+        $xslt = new XsltProcessor(self::fixtureFile($filename));
 
-        $this->assertInternalType('array', $xslt->getLastErrors());
+        $this->assertIsArray($xslt->getLastErrors());
         $this->assertCount($errorsCount, $xslt->getLastErrors());
     }
 
@@ -46,10 +48,10 @@ class XsltProcessorTest extends TestCase
 
     public function testTransformToXml()
     {
-        $xslt = new XsltProcessor(FILES_DIR . '/valid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/valid.xsl'));
         $xslt->setParameters(array('foo' => 'bar'));
         $doc = new Document();
-        $doc->load(FILES_DIR . '/valid.xml');
+        $doc->load(self::fixtureFile('/valid.xml'));
         $xml = $xslt->transformToXml($doc, array('owner' => 'Me', 'foo' => 'quz'));
 
         $this->assertEquals('<movies><owner>Me</owner><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>', $xml, '->transformToXml() returns the generated XML');
@@ -60,10 +62,10 @@ class XsltProcessorTest extends TestCase
 
     public function testTransformToXmlError()
     {
-        $xslt = new XsltProcessor(FILES_DIR . '/invalid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/invalid.xsl'));
         $this->assertEquals(array(), $xslt->getLastErrors());
         $doc = new Document();
-        $doc->load(FILES_DIR . '/valid.xml');
+        $doc->load(self::fixtureFile('/valid.xml'));
         $xml = $xslt->transformToXml($doc, array('param' => 'val'));
 
         $this->assertFalse($xslt->getParameter('param'), '->transformToXml() reset parameters');
@@ -74,10 +76,10 @@ class XsltProcessorTest extends TestCase
 
     public function testTransformToDoc()
     {
-        $xslt = new XsltProcessor(FILES_DIR . '/valid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/valid.xsl'));
         $xslt->setParameters(array('foo' => 'bar'));
         $doc = new Document();
-        $doc->load(FILES_DIR . '/valid.xml');
+        $doc->load(self::fixtureFile('/valid.xml'));
         $genDoc = $xslt->transformToDoc($doc, array('owner' => 'Me'));
 
         $this->assertInstanceOf('\Welldom\Document', $genDoc, '->transformToDoc() returns an Welldom\Document');
@@ -90,10 +92,10 @@ class XsltProcessorTest extends TestCase
 
     public function testTransformToDocError()
     {
-        $xslt = new XsltProcessor(FILES_DIR . '/invalid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/invalid.xsl'));
         $this->assertEquals(array(), $xslt->getLastErrors());
         $doc = new Document();
-        $doc->load(FILES_DIR . '/valid.xml');
+        $doc->load(self::fixtureFile('/valid.xml'));
         $xml = $xslt->transformToDoc($doc, array('param' => 'val'));
 
         $this->assertInstanceOf('\Welldom\Document', $doc, '->transformToDoc() returns Document in case of warning');
@@ -105,28 +107,31 @@ class XsltProcessorTest extends TestCase
 
     public function testTransformToUri()
     {
-        $filename = tempnam(FILES_DIR, 'tmp_');
-        unlink($filename);
+        $filename = self::fixtureFile('/tmp_transformed_doc.xml');
 
-        $xslt = new XsltProcessor(FILES_DIR . '/valid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/valid.xsl'));
         $xslt->setParameters(array('foo' => 'bar'));
         $doc = new Document();
-        $doc->load(FILES_DIR . '/valid.xml');
-        $ret = $xslt->transformToUri($doc, $filename, array('owner' => 'Me'));
+        $doc->load(self::fixtureFile('/valid.xml'));
 
-        $this->assertTrue(is_file($filename), '->transformToUri() creates a file');
-        $this->assertEquals('<movies><owner>Me</owner><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>'."\n", file_get_contents($filename), '->transformToUri() returns the generated XML');
-        $this->assertFalse($xslt->getParameter('param'), '->transformToUri() reset parameters');
-        $this->assertEquals('bar', $xslt->getParameter('foo'), '->transformToUri() reset parameters');
-        $this->assertCount(0, $xslt->getLastErrors(), '->transformToUri() generates no error');
-        unlink($filename);
+        try {
+            $ret = $xslt->transformToUri($doc, $filename, array('owner' => 'Me'));
+
+            $this->assertTrue(is_file($filename), '->transformToUri() creates a file');
+            $this->assertEquals('<movies><owner>Me</owner><movie>The Matrix</movie><movie>Titanic</movie><movie>The Sixth Sense</movie></movies>' . "\n", file_get_contents($filename), '->transformToUri() returns the generated XML');
+            $this->assertFalse($xslt->getParameter('param'), '->transformToUri() reset parameters');
+            $this->assertEquals('bar', $xslt->getParameter('foo'), '->transformToUri() reset parameters');
+            $this->assertCount(0, $xslt->getLastErrors(), '->transformToUri() generates no error');
+        } finally {
+            @unlink($filename);
+        }
     }
 
 // ->setParameters()
 
     public function testSetParameters()
     {
-        $xslt = new XsltProcessor(FILES_DIR . '/valid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/valid.xsl'));
         $xslt->setParameters(array(
             'foo' => 'fooval',
             'bar' => 'barval',
@@ -140,7 +145,7 @@ class XsltProcessorTest extends TestCase
 
     public function testRemoveParameters()
     {
-        $xslt = new XsltProcessor(FILES_DIR . '/valid.xsl');
+        $xslt = new XsltProcessor(self::fixtureFile('/valid.xsl'));
         $xslt->setParameter('foo', 'fooval');
         $xslt->setParameter('bar', 'barval');
         $xslt->removeParameters(array('foo', 'bar'));

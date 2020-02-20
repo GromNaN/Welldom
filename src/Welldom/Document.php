@@ -3,7 +3,7 @@
 /*
  * This file is part of the Welldom package.
  *
- * (c) Groupe Express Roularta
+ * (c) Jérôme Tamarelle
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -84,7 +84,7 @@ class Document extends \DOMDocument
      * Factory.
      * Create a document from a DOMNode.
      *
-     * @param \Welldom\DOMNode $node
+     * @param \Welldom\NodeInterface $node
      * @param bool $deep When false, $node subtree is not imported.
      * @return \Welldom\Document
      */
@@ -345,7 +345,7 @@ class Document extends \DOMDocument
      */
     public function createNode($expression, $value = null, array $attributes = null)
     {
-        $current = ('/' === $expression{0}) ? $this : $this->documentElement;
+        $current = ('/' === $expression[0]) ? $this : $this->documentElement;
         $xpaths = explode('/', str_replace('//', '', $expression));
 
         $i = 0;
@@ -459,7 +459,7 @@ class Document extends \DOMDocument
      *
      * @param string $expression
      * @param string $value
-     * @return \Welldom\Node
+     * @return \Welldom\NodeInterface
      */
     public function setNodeValue($expression, $value = null)
     {
@@ -530,7 +530,7 @@ class Document extends \DOMDocument
      * @param string $expression
      * @param string $xml
      * @param boolean $append
-     * @return \Welldom\Node
+     * @return \Welldom\NodeInterface
      */
     public function setNodeInnerXml($expression, $xml, $append = false)
     {

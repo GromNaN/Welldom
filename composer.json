@@ -16,7 +16,10 @@
         }
     ],
     "require": {
-        "php": ">=7.2.0"
+        "php": ">=7.2.0",
+        "ext-dom": "*",
+        "ext-xsl": "*",
+        "ext-libxml": "*"
     },
     "suggest": {
         "symfony/css-selector": "Provides facilities is you prefers CSS to Xpath"

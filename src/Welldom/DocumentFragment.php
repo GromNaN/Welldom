@@ -11,8 +11,6 @@
 
 namespace Welldom;
 
-use Welldom\Exception\XmlLoadingException;
-
 /**
  * DOM Document Fragment extension.
  *
